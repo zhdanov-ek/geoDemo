@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">geoDemo</string>
+    <string name="info">Info</string>
+    <string name="get_address">Get address from GEO</string>
+</resources>
