@@ -2,4 +2,6 @@
     <string name="app_name">geoDemo</string>
     <string name="info">Info</string>
     <string name="get_address">Get address from GEO</string>
+    <string name="show_map">Show on the map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
