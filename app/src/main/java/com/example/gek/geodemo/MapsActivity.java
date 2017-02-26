@@ -1,6 +1,8 @@
 package com.example.gek.geodemo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,10 +31,11 @@ public class MapsActivity extends FragmentActivity
 
     private GoogleMap mMap;
     private LatLng courierPosition, yourPosition;
-    private Button btnOneMarker, btnTwoMarkers;
+    private Button btnClient, btnCourier;
     private static final int OFFSET_FROM_EDGES_OF_THE_MAP = 50;
     private static final int MAP_ZOOM = 12;
     private ArrayList<LatLng> targets;
+    private Context ctx;
 
     private BitmapDescriptor bdCyan, bdPizza, bdCar;
     private ArrayList<BitmapDescriptor> targetsIcons;
@@ -42,11 +45,13 @@ public class MapsActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        btnOneMarker = (Button) findViewById(R.id.btnClient);
-        btnTwoMarkers = (Button) findViewById(R.id.btnCourier);
+        ctx = this;
 
-        btnOneMarker.setOnClickListener(this);
-        btnTwoMarkers.setOnClickListener(this);
+        btnClient = (Button) findViewById(R.id.btnClient);
+        btnCourier = (Button) findViewById(R.id.btnCourier);
+
+        btnClient.setOnClickListener(this);
+        btnCourier.setOnClickListener(this);
 
         courierPosition = new LatLng(49.423354, 32.041006);
 
@@ -79,8 +84,8 @@ public class MapsActivity extends FragmentActivity
         mMap = googleMap;
 
         if (yourPosition != null) {
-            btnOneMarker.setEnabled(true);
-            btnTwoMarkers.setEnabled(true);
+            btnClient.setEnabled(true);
+            btnCourier.setEnabled(true);
         }
 
         // тип карты
@@ -182,7 +187,15 @@ public class MapsActivity extends FragmentActivity
 
     // Реализация интерфейса нажатия на информационное окно маркера
     @Override
-    public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "You click on marker " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+    public void onInfoWindowClick(final Marker marker) {
+        Snackbar snackbar = Snackbar.make(btnClient, "Work with client " + marker.getTitle(), Snackbar.LENGTH_LONG);
+        snackbar.setAction("Open", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ctx, "Open " + marker.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        snackbar.show();
+
     }
 }
